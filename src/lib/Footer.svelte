@@ -1,7 +1,7 @@
 <footer class="site-footer">
     <div class="container footer-content">
         <div class="footer-brand">
-            <h2>Kasol<span>Dev</span></h2>
+            <h2>K<span>Dev</span></h2>
             <p>Empowering creators with fast, AI-driven media tools.</p>
         </div>
         <div class="footer-links">
