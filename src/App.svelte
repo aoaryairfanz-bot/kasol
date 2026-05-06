@@ -226,16 +226,16 @@
 
         if (downloadFormat === 'csv') {
             // Logika CSV
-            const headers = "SKU,Nama Produk,Total Fisik,User Terakhir\n";
+            const headers = "SKU/ID,Nama,Total Stok,User Terakhir\n";
             const rows = inventoryList.map(item => `${item.sku},"${item.nama}",${item.stok},${item.user}`).join("\n");
             const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
             triggerDownload(URL.createObjectURL(blob), `${finalName}.csv`);
         } else {
             // Logika Excel (.xlsx) menggunakan SheetJS
             const wsData = inventoryList.map(item => ({
-                "SKU Barang": item.sku,
-                "Nama Produk": item.nama,
-                "Total Fisik": item.stok,
+                "SKU/ID": item.sku,
+                "Nama": item.nama,
+                "Total Stok": item.stok,
                 "User Terakhir": item.user
             }));
             const ws = XLSX.utils.json_to_sheet(wsData);
@@ -345,7 +345,6 @@
                                         <h3 class="name">{productDetails.nama}</h3>
                                         <div class="stock-circle">
                                             <span class="stock-val">{currentStock}</span>
-                                            <span class="stock-unit">pcs</span>
                                         </div>
                                         <div class="sync-info"><span class="dot"></span> Sync Aktif</div>
                                     </div>
@@ -362,7 +361,7 @@
                                     
                                     <div class="table-controls">
                                         {#if isTableVisible}
-                                            <input type="text" bind:value={searchTableQuery} placeholder="🔍 Cari SKU/Nama..." class="table-search-input" />
+                                            <input type="text" bind:value={searchTableQuery} placeholder="Cari SKU/Nama..." class="table-search-input" />
                                             <select class="select-dropdown" bind:value={itemsPerPage} on:change={handleItemsPerPageChange}>
                                                 <option value={10}>10 Baris</option>
                                                 <option value={50}>50 Baris</option>
@@ -391,9 +390,9 @@
                                         <table class="data-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20%;">SKU Barang</th>
-                                                    <th style="width: 45%;">Nama Produk</th>
-                                                    <th style="width: 15%; text-align: center;">Total Fisik</th>
+                                                    <th style="width: 20%;">SKU/ID</th>
+                                                    <th style="width: 45%;">Nama</th>
+                                                    <th style="width: 15%; text-align: center;">Total Stok</th>
                                                     <th style="width: 20%; text-align: center;">User Terakhir</th>
                                                 </tr>
                                             </thead>
@@ -406,7 +405,7 @@
                                                             <td class="font-mono text-blue">{item.sku}</td>
                                                             <td class="font-bold text-dark">{item.nama}</td>
                                                             <td style="text-align: center;">
-                                                                <span class="stock-badge {item.stok > 0 ? 'safe' : 'danger'}">{item.stok} Pcs</span>
+                                                                <span class="stock-badge {item.stok > 0 ? 'safe' : 'danger'}">{item.stok}</span>
                                                             </td>
                                                             <td style="text-align: center;">
                                                                 <span class="user-badge">{item.user}</span>
