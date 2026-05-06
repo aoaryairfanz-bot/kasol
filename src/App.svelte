@@ -53,6 +53,9 @@
     const downloadProgress = tweened(0, { duration: 400, easing: cubicOut });
     let progressInterval;
 
+    // State Login Teks
+    let showLoginModal = false; // Tambahkan variabel ini di App.svelte
+
     const API_BASE = "https://aryairfanz-kasol-dev.hf.space";
 
     const pageContent = {
@@ -260,7 +263,7 @@
     function handleItemsPerPageChange() { currentPage = 1; }
 </script>
 
-<Header bind:activeTab={activeTab} bind:loggedInUser={loggedInUser} />
+<Header bind:activeTab={activeTab} bind:loggedInUser={loggedInUser} bind:showLoginModal={showLoginModal} />
 
 <section class="hero">
     <div class="breadcrumb">Home / Tools / {pageContent[activeTab].title}</div>
@@ -315,7 +318,9 @@
                                 <p class="sub">{pageContent[activeTab].formats}</p>
                                 
                                 {#if !loggedInUser}
-                                    <div class="login-alert">Fitur terkunci. Silakan Login.</div>
+                                    <div class="login-alert">
+                                        Akses terbatas. Silakan <span class="login-link" on:click={() => showLoginModal = true}>Login</span>.
+                                    </div>
                                 {:else}
                                     <div class="search-form">
                                         <input type="text" bind:value={itemId} placeholder="ID atau SKU" class="url-input" />
@@ -576,6 +581,25 @@
     .data-table { width: 100%; border-collapse: collapse; min-width: 600px; }
     
     .data-table th, .data-table td { padding: 8px 12px; border-bottom: 1px solid #f3f4f6; font-size: 0.75rem; }
+
+    /* Membuat Teks Login */
+    .login-alert {
+        font-weight: 700;
+        color: var(--text-gray);
+        margin-top: 10px;
+        font-size: 0.9rem;
+    }
+
+    .login-link {
+        color: var(--pink-btn); /* Warna pink sesuai brand Baginda */
+        cursor: pointer;
+        text-decoration: underline;
+        transition: opacity 0.2s;
+    }
+
+    .login-link:hover {
+        opacity: 0.8;
+    }
     
     /* Membuat Header Tabel menempel di atas (Sticky) */
     .data-table th { 

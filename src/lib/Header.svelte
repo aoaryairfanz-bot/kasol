@@ -4,7 +4,7 @@
     export let activeTab;
     export let loggedInUser = null; 
 
-    let showLoginModal = false;
+    export let showLoginModal = false;
     let isMenuOpen = false; // State untuk Hamburger Menu
     let username = "";
     let password = "";
